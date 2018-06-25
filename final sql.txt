@@ -96,7 +96,7 @@ CREATE TABLE funcionario (
 	CPFFuncionario BIGINT NOT NULL,
 	codDepartamento BIGINT NOT NULL ,
 	nome varchar(50) NOT NULL,
-	endereço varchar(100) NOT NULL,
+	endereco varchar(100) NOT NULL,
 	telefone varchar(12) NOT NULL,
 	PRIMARY KEY (CPFFuncionario)
 );
@@ -131,6 +131,7 @@ CREATE TABLE confereCarga(
 CREATE TABLE departamento (
 	codDepartamento BIGINT NOT NULL ,
 	baseSalarial BIGINT NOT NULL,
+	descricao varchar(20),
 	PRIMARY KEY (codDepartamento)
 );
 
