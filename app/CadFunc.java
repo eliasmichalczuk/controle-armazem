@@ -4,32 +4,36 @@
  * and open the template in the editor.
  */
 package app;
+
 import DAO.Connect;
-import EDA.Cliente;
+import EDA.Dep;
+import EDA.Funcionario;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Elias
  */
-public class CadCliente extends javax.swing.JFrame {
- boolean ehCadastro = true;
+public class CadFunc extends javax.swing.JFrame {
+boolean ehCadastro = true;
     /**
-     * Creates new form CadCliente
+     * Creates new form CadFunc
      */
-    public CadCliente(boolean cadastrar) {
+    public CadFunc(boolean cadastrar) {
         initComponents();
-        if( cadastrar ){
-            rotuloTitulo.setText("Cadastrar Cliente");
+        carregardep();
+       if(cadastrar){
+            rotuloTitulo.setText("Cadastrar Funcionario");
             botaoAcao.setText("Cadastrar");
         }
         else{
-            rotuloTitulo.setText("Alterar Cliente");
+            rotuloTitulo.setText("Alterar Funcionario");
             botaoAcao.setText("Consultar");
             alterarEdicaoCampos( false );
-            campocodigo.setEnabled( true );
-            
-        }
+            campocpf.setEnabled( true );
+            combobox.setSelectedIndex(0);
+        } 
     }
 
     /**
@@ -41,31 +45,25 @@ public class CadCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        rotuloTitulo = new javax.swing.JLabel();
-        labelcodigo = new javax.swing.JLabel();
         labelnome = new javax.swing.JLabel();
-        labelqtd = new javax.swing.JLabel();
         botaoAcao = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
-        campocodigo = new javax.swing.JTextField();
-        campoqtd = new javax.swing.JTextField();
-        camponome = new javax.swing.JTextField();
+        campocpf = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        camponome = new javax.swing.JTextField();
+        rotuloTitulo = new javax.swing.JLabel();
+        labelcodigo = new javax.swing.JLabel();
+        campoend = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        campotel = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        combobox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        rotuloTitulo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        rotuloTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rotuloTitulo.setText("Dados do cliente");
-
-        labelcodigo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
-        labelcodigo.setText("Código:");
-
         labelnome.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
         labelnome.setText("Nome:");
-
-        labelqtd.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
-        labelqtd.setText("Quantidade: ");
 
         botaoAcao.setBackground(new java.awt.Color(204, 255, 204));
         botaoAcao.setText("acao");
@@ -87,6 +85,22 @@ public class CadCliente extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Armazem !N$4N0");
 
+        rotuloTitulo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        rotuloTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rotuloTitulo.setText("Cadastro funcionario");
+
+        labelcodigo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
+        labelcodigo.setText("CPF:");
+
+        jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
+        jLabel5.setText("Tel:");
+
+        jLabel7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
+        jLabel7.setText("Endereço:");
+
+        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
+        jLabel8.setText("Dep:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,11 +108,12 @@ public class CadCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(rotuloTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelcodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(campocodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(labelnome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -108,12 +123,19 @@ public class CadCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoAcao))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(labelqtd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoqtd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 28, Short.MAX_VALUE)
+                        .addComponent(campotel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(233, 233, 233))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoend, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -121,19 +143,27 @@ public class CadCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rotuloTitulo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelcodigo)
-                    .addComponent(campocodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelnome)
                     .addComponent(camponome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoqtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelqtd, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                    .addComponent(campotel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoAcao)
                     .addComponent(botaoCancelar))
@@ -163,28 +193,29 @@ public class CadCliente extends javax.swing.JFrame {
         Armazem.showTelaInicial();
         this.dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
-
-       private void tratarAlteracao()
+    private void tratarAlteracao()
        {
-           if( campocodigo.isEnabled() ){
+           if( campocpf.isEnabled() ){
             long codigo;
             try{
-                codigo = Long.parseLong( campocodigo.getText() );
+                codigo = Long.parseLong( campocpf.getText() );
             } catch ( NumberFormatException ex ){
                 showErroPreenchimento();
                 return;
             }
-
-            Cliente cl = Armazem.getBD().getCliente(codigo);
-            if( cl==null ){
-                JOptionPane.showMessageDialog(this, "Nenhum cliente foi encontrado com este código!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+            
+            Funcionario f = Armazem.getBD().getFunc(codigo);
+            if( f==null ){
+                JOptionPane.showMessageDialog(this, "Nenhum funcionario foi encontrado com este código!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
             }
             else{
-                campocodigo.setText( ""+cl.codCliente );
-                camponome.setText( cl.nomeFantasia );
-                campoqtd.setText(""+cl.quantidadeCarga );
+                campocpf.setText( ""+f.cpf );
+                camponome.setText( f.nome );
+                campoend.setText(""+f.endereco );
+                campotel.setText(""+f.telefone );
+                carregardep();
                 alterarEdicaoCampos( true );
-                campocodigo.setEnabled( false );
+                campocpf.setEnabled( false );
                 botaoAcao.setText("Alterar");
             }
         }
@@ -194,16 +225,20 @@ public class CadCliente extends javax.swing.JFrame {
                 showErroPreenchimento();
                 return;
             }
-            long cod, qtd;
+            long cpf,cod;
+            String nome,cod1;
             try{
-                cod = Long.parseLong( campocodigo.getText() );
-                qtd = Long.parseLong( campoqtd.getText() );
+                cpf = Long.parseLong( campocpf.getText() );
+                
+                //Dep selected =(Dep)combobox.getSelectedItem();
+                //cod = selected.cod;
+                cod = combobox.getSelectedIndex();
             } catch ( NumberFormatException ex ){
                 showErroPreenchimento();
                 return;
             }
-            Cliente cliente = new Cliente(cod, camponome.getText(), qtd);
-            boolean resultado = Armazem.getBD().alterarCliente(cliente);
+            Funcionario func = new Funcionario(cpf, cod, camponome.getText(), campoend.getText(),  campotel.getText());
+            boolean resultado = Armazem.getBD().alterarFunc(func);
             if( resultado == false ){
                 showErroBD();
                 return;
@@ -213,55 +248,61 @@ public class CadCliente extends javax.swing.JFrame {
             if( opcao == JOptionPane.YES_OPTION ){
                 limpaCampos();
                 alterarEdicaoCampos( false );
-                campocodigo.setEnabled( true );
+                campocpf.setEnabled( true );
                 botaoAcao.setText("Consultar");
             }
             else{
-                Main.showMainWindow();
+                Armazem.showTelaInicial();
                 this.dispose();
             }
         }
        }
-       private void tratarCadastro(){
+    private void tratarCadastro(){
         if( verificarErros() ){
                 showErroPreenchimento();
                 return;
             }
-            long cod, qtd;
-            String nome;
+            long cpf,cod;
+            String nome,cod1;
             try{
-                cod = Long.parseLong( campocodigo.getText() );
-                qtd = Long.parseLong( campoqtd.getText() );
+                cpf = Long.parseLong( campocpf.getText() );
+                
+                //Dep selected =(Dep)combobox.getSelectedItem();
+                //cod = selected.cod;
+                cod = combobox.getSelectedIndex() + 1;
             } catch ( NumberFormatException ex ){
                 showErroPreenchimento();
                 return;
             }
             
-            Cliente cliente = new Cliente(cod, camponome.getText(), qtd);
-            boolean resultado = Armazem.getBD().cadastrarCliente(cliente);
+            Funcionario func = new Funcionario(cpf, cod, camponome.getText(), campoend.getText(),  campotel.getText());
+            boolean resultado = Armazem.getBD().cadastrarFunc(func);
             if( resultado == false ){
                 showErroBD();
                 return;
             }
-            int opcao = JOptionPane.showConfirmDialog(this, "Paciente adicionado com sucesso.\n"
+            int opcao = JOptionPane.showConfirmDialog(this, "Funcionario adicionado com sucesso.\n"
                     + "Deseja adicionar outro registro?", "Operação Realizada com Sucesso", JOptionPane.YES_NO_OPTION);
             if( opcao == JOptionPane.YES_OPTION ){
                 limpaCampos();
             }
             else{
-                Main.showMainWindow();
+                Armazem.showTelaInicial();
                 this.dispose();
             }
     }
+    /**
+     * @param args the command line arguments
+     */
     private boolean verificarErros(){
-        if( camponome.getText().length()<=3 && campoqtd.getText().length()<=1 ){
+        if( camponome.getText().length()<=5 && campotel.getText().length()<=3 && campocpf.getText().length()<11 && campocpf.getText().length()>11 && campoend.getText().length()<=5 ){
             showErroPreenchimento();
             return true;
         }
         return false;
     }
     
-    private void showErroPreenchimento(){
+     private void showErroPreenchimento(){
         JOptionPane.showMessageDialog(this, "Verifique o preenchimento dos dados!", "Erro", JOptionPane.ERROR_MESSAGE);
     }
     private void showErroBD(){
@@ -269,29 +310,43 @@ public class CadCliente extends javax.swing.JFrame {
     }
         private void limpaCampos(){
         camponome.setText("");
-        campoqtd.setText("");
+        campotel.setText("");
+        campocpf.setText("");
+        campoend.setText("");
     }
         
     
     private void alterarEdicaoCampos(boolean opcao){
         camponome.setEnabled( opcao );
-        campoqtd.setEnabled( opcao );
+        campotel.setEnabled( opcao );
+        campocpf.setEnabled( opcao );
+        campoend.setEnabled( opcao );
+        combobox.setEnabled( opcao );
     }
-    /**
-     * @param args the command line arguments
-     */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAcao;
     private javax.swing.JButton botaoCancelar;
-    private javax.swing.JTextField campocodigo;
+    private javax.swing.JTextField campocpf;
+    private javax.swing.JTextField campoend;
     private javax.swing.JTextField camponome;
-    private javax.swing.JTextField campoqtd;
+    private javax.swing.JTextField campotel;
+    private javax.swing.JComboBox<String> combobox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel labelcodigo;
     private javax.swing.JLabel labelnome;
-    private javax.swing.JLabel labelqtd;
     private javax.swing.JLabel rotuloTitulo;
     // End of variables declaration//GEN-END:variables
+
+    private void carregardep() {
+       Connect bd = Armazem.getBD();
+        ArrayList<Dep> deps = bd.getDeps();
+        for( Dep d : deps ){
+            Dep dep = new Dep(d.cod, d.salario, d.desc);
+            combobox.addItem(d.desc);
+        }
+    }
 }

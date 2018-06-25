@@ -1,5 +1,7 @@
 package DAO;
 import EDA.Cliente;
+import EDA.Dep;
+import EDA.Funcionario;
 import EDA.Paciente;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -131,6 +133,136 @@ public class Connect {
          return true;
     }
     
+    public ArrayList<Dep> getDeps(){
+        if( !conectar() ) return null;
+        ArrayList<Dep> resultado = new ArrayList();
+        try{
+            Statement stmt = null;
+            stmt = c.createStatement();
+            String sql = "SELECT * FROM departamento";
+            ResultSet rs = stmt.executeQuery( sql );
+            while ( rs.next() ) {
+                long cod = rs.getLong("codDepartamento");
+                long salario = rs.getLong("baseSalarial");
+                String desc = rs.getString("descricao");
+                resultado.add(new Dep(cod, salario, desc));
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( "ERRO DURANTE CONSULTA: getDeps");
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        }
+        return resultado;
+    }
+    
+    public boolean cadastrarFunc(Funcionario f){
+        if( !conectar() ) return false;
+        Cliente resultado = null;
+        try{
+            Statement stmt = null;
+            stmt = c.createStatement();
+                String sql = "INSERT INTO funcionario (CPFFuncionario, codDepartamento, nome, endereco, telefone)"
+                    + "VALUES ("+f.cpf+", "+f.coddep+",'"+f.nome+"','"+f.endereco+"','"+f.telefone+"')";
+            stmt.executeUpdate( sql );
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( "ERRO DURANTE INSERÇÃO: cadastrarCliente");
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean alterarFunc(Funcionario f){
+        if( !conectar() ) return false;
+        Cliente resultado = null;
+        try{
+            Statement stmt = null;
+            stmt = c.createStatement();
+            String sql = "UPDATE funcionario SET nome = '"+f.nome+"', codDepartamento = "+f.coddep+", endereco = '"+f.endereco+"',  telefone = '"+f.telefone+"'"
+                    + "WHERE CPFFuncionario = "+f.cpf;
+            stmt.executeUpdate( sql );
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( "ERRO DURANTE ATUALIZAÇÃO: alterarFunc");
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            return false;
+        }
+        return true;
+    }
+    
+    public Funcionario getFunc(long cpf ){
+        if( !conectar() ) return null;
+        Funcionario resultado = null;
+        try{
+            Statement stmt = null;
+            stmt = c.createStatement();
+            String sql = "SELECT * FROM funcionario WHERE  = CPFFuncionario"+cpf;
+            ResultSet rs = stmt.executeQuery( sql );
+            while ( rs.next() ) {
+                cpf = rs.getLong("CPFFuncionario");
+                long coddep = rs.getLong("coddep");
+                String nome = rs.getString("nome");
+                String endereco = rs.getString("endereco");
+                String telefone = rs.getString("telefone");
+                resultado = new Funcionario(cpf, coddep, nome, endereco, telefone);
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( "ERRO DURANTE CONSULTA: getFunc");
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        }
+        return resultado;
+    }
+    
+    public ArrayList<Funcionario> getFuncs(){
+        if( !conectar() ) return null;
+         ArrayList<Funcionario> resultado = null;
+        try{
+            Statement stmt = null;
+            stmt = c.createStatement();
+            String sql = "SELECT * FROM funcionario";
+            ResultSet rs = stmt.executeQuery( sql );
+            while ( rs.next() ) {
+                long cpf = rs.getLong("CPFFuncionario");
+                long coddep = rs.getLong("codDepartamento");
+                String nome = rs.getString("nome");
+                String endereco = rs.getString("endereco");
+                String telefone = rs.getString("telefone");
+                resultado.add(new Funcionario(cpf, coddep, nome, endereco, telefone));
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( "ERRO DURANTE CONSULTA: getFuncs");
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        }
+        return resultado;
+    }
+    public boolean excluirFunc(long cod)
+    {
+         if( !conectar() ) return false;
+         try{
+            Statement stmt = null;
+            stmt = c.createStatement();
+            String sql = "delete FROM funcionario where CPFFuncionario = "+cod;
+            ResultSet rs = stmt.executeQuery( sql );
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( "ERRO DURANTE DELETE: excluirFunc");
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        }
+         return true;
+    }
     
     // banco hospital
     
