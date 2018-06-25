@@ -1,0 +1,278 @@
+
+
+CREATE TABLE cliente (
+	codCliente BIGINT NOT NULL ,
+	nomeFantasia VARCHAR(100) NOT NULL,
+	quantidadeCarga BIGINT NOT NULL,
+	PRIMARY KEY (codCliente)
+);
+
+INSERT INTO cliente (codCliente,nomeFantasia , quantidadeCarga) VALUES
+('1','Nitrox', '100'),
+('2','Neuge', '200'),
+('3','BlueWater', '75'),
+('4','Oraculo', '250'),
+('5','Il Punto Verde', '350');
+
+CREATE TABLE notaFiscal (
+	DANFE BIGINT NOT NULL,
+	codCliente BIGINT NOT NULL ,
+	quantidadeCarga BIGINT NOT NULL,
+	codordem BIGINT NOT NULL,
+	PRIMARY KEY (DANFE)
+);
+
+INSERT INTO notaFiscal (DANFE, codCliente, quantidadeCarga,codordem) VALUES
+('30589' ,'1','80','1'),
+('2555','2','155','2'),
+('987','3','60','3'),
+('100125','4','200','4'),
+('98655','5','350','5');
+
+CREATE TABLE carga (
+	codBarra BIGINT NOT NULL ,
+	DANFE BIGINT NOT NULL,
+	codCorredor BIGINT NOT NULL ,
+	codTipoCarga BIGINT NOT NULL ,
+	PRIMARY KEY (codBarra)
+);
+
+INSERT INTO carga (codBarra,DANFE,codCliente,codCorredor,codTipoCarga) VALUES
+('7894826579135','30589','1','3','2'),
+('7896497824657','2555','2','2','4'),
+('7891654897535','987','3','3','1'),
+('7893579868954','100125','4','1','3'),
+('7793596846127','98655','5','1','1');
+
+CREATE TABLE tipoCarga (
+	codTipoCarga INT NOT NULL ,
+	descricao varchar(50),
+	PRIMARY KEY (codTipoCarga)
+);
+
+INSERT INTO tipoCarga (codTipoCarga,descricao) VALUES
+('1','Caixa de papelao'),
+('2','Galao de oxigenio'),
+('3','Big Bag'),
+('4','Rolo de tecido');
+
+CREATE TABLE alocacao(
+	codAloca BIGINT NOT NULL ,
+	posicaoCorredor BIGINT NOT NULL,
+	codBarra BIGINT NOT NULL,
+	codCorredor BIGINT NOT NULL ,
+	PRIMARY KEY (codAloca)
+);
+
+INSERT INTO alocacao (codAloca, posicaoCorredor, codBarra, codCorredor) VALUES
+('1','0231','7894826579135','3'),
+('2','0200','7896497824657','2'),
+('4','0351','7891654897535','3'),
+('5','0059','7893579868954','1'),
+('6','0085','7793596846127','1');
+
+CREATE TABLE corredor (
+	codCorredor BIGINT NOT NULL ,
+	codArmazem BIGINT NOT NULL ,
+	incioCorredor BIGINT NOT NULL,
+	finalCorredor BIGINT NOT NULL,
+	PRIMARY KEY (codCorredor)
+);
+
+INSERT INTO corredor (codCorredor, codArmazem, incioCorredor, finalCorredor) VALUES
+('1','1','0000','0099'),
+('2','1','0100','0199'),
+('3','1','0200','0299'),
+('4','2','0300','0399'),
+('5','2','0400','0499'),
+('6','2','0500','0599'),
+('7','3','0600','0699'),
+('8','3','0700','0799'),
+('9','3','0800','0899');
+
+CREATE TABLE armazem (
+	codArmazem BIGINT NOT NULL ,
+	PRIMARY KEY (codArmazem)
+);
+
+INSERT INTO armazem (codArmazem) VALUES
+('1'),
+('2'),
+('3');
+
+CREATE TABLE funcionario (
+	CPFFuncionario BIGINT NOT NULL,
+	codDepartamento BIGINT NOT NULL ,
+	nome varchar(50) NOT NULL,
+	endereço varchar(100) NOT NULL,
+	telefone varchar(12) NOT NULL,
+	PRIMARY KEY (CPFFuncionario)
+);
+
+INSERT INTO funcionario (CPFFuncionario,codDepartamento,nome,endereço,telefone) VALUES
+('02089765875','1','Adriano Selter','Rua Aphonso Nogueira','30286598'), -- OE
+('02555612345','2','Barbara Suito','Rua sete de setembro','30284598'), -- C
+('02865495126','1','Marcos Maria da Silva','Rua constante','31255585'), --OE
+('02922252846','3','Lucio Antonio da Silva','Rua Bahia','30284454'), -- A
+('02775395125','1','Alana Pereira','Rua Araucaria','31259898'),  -- OE
+('02720330156','2','Nathan Alencar','Rua quinze de novembro','30286436'), -- C
+('02621536945','2','Fernando Franca','Rua Guanabara','30287512'), -- C
+('02524857915','3','Joao Pereira','Rua nove de marco','30289635'), -- M
+('02152562335','3','Carlos Valinda','Rua carajas','30288525'), --M
+('02226544585','3','Maria angela Silva','Rua vinte e cinco de agosto','30289696'); -- M
+
+CREATE TABLE operadorEmpilhadeira (
+	CPFFuncionario BIGINT NOT NULL,
+	vencimentoCurso TIME NOT NULL,
+	PRIMARY KEY (CPFFuncionario)
+);
+
+INSERT INTO operadorEmpilhadeira (CPFFuncionario,vencimentoCurso) VALUES
+('02089765875','2018/12/01'),
+('02775395125','2019/05/26'),
+('02865495126','2019/02/16');
+
+
+CREATE TABLE tranportaCarga(
+		codTransporta BIGINT NOT NULL ,
+		CPFFuncionario BIGINT NOT NULL,
+		codBarra BIGINT NOT NULL ,
+		data_hora TIMESTAMP DEFAULT NOW(),
+		PRIMARY KEY (codTransporta)
+);
+
+INSERT INTO tranportaCarga (codTransporta,CPFFuncionario,codBarra) VALUES
+('1','02089765875','7894826579135'),
+('2','02775395125','7896497824657'),
+('3','02865495126','7891654897535'),
+('4','02089765875','7893579868954');
+
+CREATE TABLE confereCarga(
+	codConfere BIGINT NOT NULL ,
+	CPFFuncionario BIGINT NOT NULL,
+	codBarra BIGINT NOT NULL ,
+	data_hora TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY (codConfere)
+);
+
+INSERT INTO confereCarga (codConfere,CPFFuncionario,codBarra) VALUES
+('1','02555612345','7894826579135'),
+('2','02720330156','7896497824657'),
+('3','02621536945','7891654897535'),
+('4','02621536945','7893579868954');
+
+
+CREATE TABLE departamento (
+	codDepartamento BIGINT NOT NULL ,
+	descricao VARCHAR (50),
+	baseSalarial BIGINT NOT NULL,
+	PRIMARY KEY (codDepartamento)
+);
+
+INSERT INTO departamento (codDepartamento,descricao,baseSalarial) VALUES
+('1','Logistica 1','1200'),
+('2','Logistica 2','1150'),
+('3','Logistica','1399');
+
+CREATE TABLE conferente (
+	CPFFuncionario BIGINT NOT NULL,
+	numeroColetor BIGINT NOT NULL UNIQUE,
+	PRIMARY KEY (CPFFuncionario)
+);
+
+INSERT INTO conferente (CPFFuncionario,numeroColetor) VALUES
+('02555612345','1'),
+('02720330156','2'),
+('02621536945','3');
+
+CREATE TABLE administrativo (
+	CPFFuncionario BIGINT NOT NULL,
+	DANFE BIGINT NOT NULL,
+	PRIMARY KEY (CPFFuncionario)
+);
+
+INSERT INTO administrativo (CPFFuncionario,DANFE) VALUES
+('02922252846','7894826579135'),
+('02922252846','7896497824657'),
+('02922252846','7891654897535'),
+('02922252846','7893579868954');
+
+CREATE TABLE motorista (
+	CPFFuncionario BIGINT NOT NULL,
+	codCaminhao BIGINT NOT NULL,
+	cnhVencimento BIGINT NOT NULL,
+	tipoContrato VARCHAR(100) NOT NULL,
+	PRIMARY KEY (CPFFuncionario)
+);
+
+INSERT INTO motorista (CPFFuncionario,codCaminhao,cnhVencimento,tipoContrato) VALUES
+('02524857915','1','2020/04/01','Contratado'),
+('02152562335','2','2022/03/01','Terceiro'),
+('02226544585','3','2019/08/01','Contratado');
+
+CREATE TABLE caminhao (
+	codCaminhao BIGINT NOT NULL,
+	tamanho VARCHAR(100) NOT NULL,
+	modelo VARCHAR(100) NOT NULL,
+	ano VARCHAR(100) NOT NULL,
+	PRIMARY KEY (codCaminhao)
+);
+
+INSERT INTO caminhao (codCaminhao,tamanho,modelo,ano) VALUES
+('1','Cavalo Mecânico Trucado','bau','1998'),
+('2','','Cavalo Mecânico Trucado','silo','2002'),
+('3','2 eixos','sider','2008');
+
+CREATE TABLE ordem (
+	codOrdem BIGINT NOT NULL ,
+	codBarra BIGINT NOT NULL ,
+	tipoOrdem BIGINT NOT NULL,
+	PRIMARY KEY (codOrdem)
+);
+
+INSERT INTO ordem (codOrdem,codBarra,tipoOrdem) VALUES
+('1','7894826579135','Descarga'),
+('2','7896497824657','Descarga'),
+('3','7891654897535','Descarga'),
+('4','7893579868954','Descarga'),
+('5','7793596846127','Carga');
+
+
+
+ALTER TABLE notaFiscal ADD CONSTRAINT notaFiscal_fk0 FOREIGN KEY (codCliente) REFERENCES cliente(codCliente);
+
+ALTER TABLE carga ADD CONSTRAINT carga_fk0 FOREIGN KEY (DANFE) REFERENCES notaFiscal(DANFE);
+
+ALTER TABLE carga ADD CONSTRAINT carga_fk1 FOREIGN KEY (codCorredor) REFERENCES corredor(codCorredor);
+
+ALTER TABLE carga ADD CONSTRAINT carga_fk2 FOREIGN KEY (codTipoCarga) REFERENCES tipoCarga(codTipoCarga);
+
+ALTER TABLE corredor ADD CONSTRAINT corredor_fk0 FOREIGN KEY (codArmazem) REFERENCES armazem(codArmazem);
+
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_fk0 FOREIGN KEY (codDepartamento) REFERENCES departamento(codDepartamento);
+
+ALTER TABLE operadorEmpilhadeira ADD CONSTRAINT operadorEmpilhadeira_fk0 FOREIGN KEY (CPFFuncionario) REFERENCES funcionario(CPFFuncionario);
+
+ALTER TABLE administrativo ADD CONSTRAINT administrativo_fk0 FOREIGN KEY (CPFFuncionario) REFERENCES funcionario(CPFFuncionario);
+
+ALTER TABLE administrativo ADD CONSTRAINT administrativo_fk1 FOREIGN KEY (DANFE) REFERENCES notaFiscal(DANFE);
+
+ALTER TABLE motorista ADD CONSTRAINT motorista_fk0 FOREIGN KEY (CPFFuncionario) REFERENCES funcionario(CPFFuncionario);
+
+ALTER TABLE motorista ADD CONSTRAINT motorista_fk1 FOREIGN KEY (codOrdem) REFERENCES ordem(codOrdem);
+
+ALTER TABLE motorista ADD CONSTRAINT motorista_fk2 FOREIGN KEY (codCaminhao) REFERENCES caminhao(codCaminhao);
+
+ALTER TABLE ordem ADD CONSTRAINT ordem_fk0 FOREIGN KEY (codBarra) REFERENCES carga(codBarra);
+
+ALTER TABLE confereCarga ADD CONSTRAINT confereCarga_fk0 FOREIGN KEY (CPFFuncionario) REFERENCES funcionario(CPFFuncionario);
+
+ALTER TABLE confereCarga ADD CONSTRAINT confereCarga_fk1 FOREIGN KEY (codBarra) REFERENCES carga(codBarra);
+
+ALTER TABLE alocacao ADD CONSTRAINT alocacao_fk0_codBarra FOREIGN KEY (codBarra) REFERENCES carga(codBarra);
+
+ALTER TABLE alocacao ADD CONSTRAINT alocacao_fk1_codCorredor FOREIGN KEY (codCorredor) REFERENCES corredor(codCorredor);
+
+ALTER TABLE tranportaCarga ADD CONSTRAINT tranportaCarga_fk_0 FOREIGN KEY (CPFFuncionario) REFERENCES funcionario(CPFFuncionario);
+
+ALTER TABLE tranportaCarga ADD CONSTRAINT tranportaCarga_fk_1 FOREIGN KEY (codBarra) REFERENCES carga(codBarra);

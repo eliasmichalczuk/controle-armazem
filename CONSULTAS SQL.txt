@@ -1,0 +1,23 @@
+SELECT funcionario.nome , tranportaCarga.data_hora
+FROM funcionario , operadorEmpilhadeira , carga , tranportaCarga
+WHERE funcionario.CPFFuncionario = operadorEmpilhadeira.CPFFuncionario -- funcionario x operadorEmpilhadeira
+AND carga.codBarra = tranportaCarga.codBarra -- carga x transporta
+AND tranportaCarga.CPFFuncionario = funcionario.CPFFuncionario -- funcionario x transporta
+
+SELECT cliente.nomeFantasia,notaFiscal.quantidadeCarga,ordem.tipoOrdem,tipoCarga.descricao
+FROM cliente , notaFiscal, carga , tipoCarga , ordem
+WHERE cliente.codCliente = notaFiscal.codCliente
+AND carga.DANFE = notaFiscal.DANFE
+AND carga.codCliente = cliente.codCliente
+AND carga.codTipoCarga=tipoCarga.codTipoCarga
+AND ordem.codBarra = carga.codBarra
+and ordem.codOrdem = cliente.codordem
+
+
+SELECT confereCarga.data_hora,tranportaCarga.data_hora,alocacao.posicaoCorredor,corredor.incioCorredor,corredor.finalCorredor,armazem.codArmazem
+FROM confereCarga,tranportaCarga,alocacao,corredor,armazem
+WHERE confereCarga.codBarra = tranportaCarga.codBarra
+AND alocacao.codBarra = confereCarga.codBarra
+AND alocacao.codBarra = tranportaCarga.codBarra
+AND corredor.codCorredor = alocacao.codCorredor
+AND corredor.codArmazem = armazem.codArmazem
