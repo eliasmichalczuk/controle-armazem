@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app;
+package app.func;
 
 import DAO.Connect;
 import EDA.Funcionario;
+import app.Armazem;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,13 +15,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Elias
  */
-public class ConsultaUm extends javax.swing.JFrame {
+public class VFunc extends javax.swing.JFrame {
 
     /**
-     * Creates new form ConsultaUm
+     * Creates new form VFunc
      */
-    public ConsultaUm() {
+    public VFunc() {
         initComponents();
+        carregarFuncionarios();
     }
 
     /**
@@ -42,7 +44,7 @@ public class ConsultaUm extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Consulta 1");
+        jLabel2.setText("Visualizar funcionarios");
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -52,15 +54,6 @@ public class ConsultaUm extends javax.swing.JFrame {
                 "Codigo", "Nome", "Quantidade de cargas"
             }
         ));
-        tabela.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tabelaAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
         jScrollPane1.setViewportView(tabela);
 
         voltar.setText("Voltar");
@@ -78,17 +71,17 @@ public class ConsultaUm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(142, Short.MAX_VALUE)
+                .addComponent(voltar)
+                .addGap(197, 197, 197))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1002, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(voltar)
-                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,11 +90,11 @@ public class ConsultaUm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(voltar)
-                .addGap(6, 6, 6))
+                .addContainerGap())
         );
 
         pack();
@@ -111,21 +104,21 @@ public class ConsultaUm extends javax.swing.JFrame {
         close();
         this.dispose();
     }//GEN-LAST:event_voltarActionPerformed
-
-    private void tabelaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaAncestorAdded
+    int close(){
+        Armazem.showTelaInicial();
+        return DISPOSE_ON_CLOSE; 
+    }
+    
+    private void carregarFuncionarios(){
         Connect bd = Armazem.getBD();
-        ArrayList<Funcionario> func = bd.consultaUm();
+        ArrayList<Funcionario> func = bd.getFuncs();
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         while( modelo.getRowCount() > 0 )
             modelo.removeRow( 0 );
 
         for( Funcionario f : func ){
-            modelo.addRow( new Object[]{f.nome, f.endereco} );
+            modelo.addRow( new Object[]{f.cpf, f.coddep, f.nome, f.endereco, f.telefone} );
         }
-    }//GEN-LAST:event_tabelaAncestorAdded
-    int close(){
-        Armazem.showTelaInicial();
-        return DISPOSE_ON_CLOSE; 
     }
     /**
      * @param args the command line arguments

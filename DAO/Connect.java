@@ -66,13 +66,13 @@ public class Connect {
         return true;
     }
     
-    public Cliente getCliente(long cod ){
+    public Cliente getCliente(int cod ){
         if( !conectar() ) return null;
         Cliente resultado = null;
         try{
             Statement stmt = null;
             stmt = c.createStatement();
-            String sql = "SELECT * FROM cliente WHERE codCliente = "+cod;
+            String sql = "SELECT * FROM cliente WHERE codcliente = "+cod;
             ResultSet rs = stmt.executeQuery( sql );
             while ( rs.next() ) {
                 long codCliente = rs.getLong("codCliente");
@@ -263,6 +263,73 @@ public class Connect {
         }
          return true;
     }
+    
+    public ArrayList<Funcionario> consultaUm(){
+        if( !conectar() ) return null;
+       ArrayList<Funcionario> resultado = null;
+        try{
+            Statement stmt = null;
+            stmt = c.createStatement();
+            String sql = "SELECT funcionario.nome , tranportaCarga.data_hora\n" +
+"FROM funcionario , operadorEmpilhadeira , carga , tranportaCarga\n" +
+"WHERE funcionario.CPFFuncionario = operadorEmpilhadeira.CPFFuncionario -- funcionario x operadorEmpilhadeira\n" +
+"AND carga.codBarra = tranportaCarga.codBarra -- carga x transporta\n" +
+"AND tranportaCarga.CPFFuncionario = funcionario.CPFFuncionario -- funcionario x transporta";
+            ResultSet rs = stmt.executeQuery( sql );
+            while ( rs.next() ) {
+                String nome = rs.getString("funcionario");
+                String endereco = rs.getString("tranportaCarga");
+                resultado.add(new Funcionario(0, 0, nome, endereco, "null"));
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( "ERRO DURANTE CONSULTA: getFunc");
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        }
+        return resultado;
+    }
+
+public ArrayList<Cliente> consultaDois(){
+        if( !conectar() ) return null;
+       ArrayList<Cliente> resultado = null;
+        try{
+            Statement stmt = null;
+            stmt = c.createStatement();
+            String sql = "SELECT cliente.nomeFantasia,notaFiscal.quantidadeCarga,ordem.tipoOrdem,tipoCarga.descricao\n" +
+"FROM cliente , notaFiscal, carga , tipoCarga , ordem\n" +
+"WHERE cliente.codCliente = notaFiscal.codCliente\n" +
+"AND carga.DANFE = notaFiscal.DANFE\n" +
+"AND carga.codCliente = cliente.codCliente\n" +
+"AND carga.codTipoCarga=tipoCarga.codTipoCarga\n" +
+"AND ordem.codBarra = carga.codBarra\n" +
+"and ordem.codOrdem = cliente.codordem";
+            ResultSet rs = stmt.executeQuery( sql );
+            while ( rs.next() ) {
+                long qtd = rs.getInt("quantidadeCarga");
+                String nom21 = rs.getString("nomeFantasia");
+                String nome = rs.getString("tipoOrdem");
+                String endereco = rs.getString("descricao");
+                resultado.add(new Cliente(qtd, nom21, nome, endereco));
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( "ERRO DURANTE CONSULTA: getFunc");
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        }
+        return resultado;
+    }
+
+
+
+
+
+
+
+
     
     // banco hospital
     

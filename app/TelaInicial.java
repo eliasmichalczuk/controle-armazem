@@ -5,6 +5,13 @@
  */
 package app;
 
+import app.cliente.CadCliente;
+import app.cliente.ExcluirCliente;
+import app.cliente.VCliente;
+import app.func.CadFunc;
+import app.func.ExcluirFunc;
+import app.func.VFunc;
+
 /**
  *
  * @author Elias
@@ -30,13 +37,15 @@ public class TelaInicial extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         vcl = new javax.swing.JButton();
         cadcl = new javax.swing.JButton();
         atcl = new javax.swing.JButton();
         vcl1 = new javax.swing.JButton();
         cadcl1 = new javax.swing.JButton();
         atcl1 = new javax.swing.JButton();
+        atcl2 = new javax.swing.JButton();
+        atcl3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,10 +60,6 @@ public class TelaInicial extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Clinica Tabajara");
 
         vcl.setText("Visualizar Clientes");
         vcl.addActionListener(new java.awt.event.ActionListener() {
@@ -98,15 +103,30 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        atcl2.setText("Excluir Cliente");
+        atcl2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atcl2ActionPerformed(evt);
+            }
+        });
+
+        atcl3.setText("Excluir Funcionario");
+        atcl3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atcl3ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Armazem !N$4N0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(129, 129, 129)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -117,9 +137,14 @@ public class TelaInicial extends javax.swing.JFrame {
                             .addComponent(atcl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(vcl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                        .addComponent(jButton6)))
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(atcl2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(atcl3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                        .addComponent(jButton6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,12 +162,16 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton6)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(atcl2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(vcl1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cadcl1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(atcl1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(atcl3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
@@ -186,6 +215,16 @@ public class TelaInicial extends javax.swing.JFrame {
         this.setVisible( false );
     }//GEN-LAST:event_atcl1ActionPerformed
 
+    private void atcl2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atcl2ActionPerformed
+        new ExcluirCliente().setVisible( true );
+        this.setVisible( false );
+    }//GEN-LAST:event_atcl2ActionPerformed
+
+    private void atcl3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atcl3ActionPerformed
+       new ExcluirFunc().setVisible( true );
+        this.setVisible( false );
+    }//GEN-LAST:event_atcl3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -224,6 +263,8 @@ public class TelaInicial extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atcl;
     private javax.swing.JButton atcl1;
+    private javax.swing.JButton atcl2;
+    private javax.swing.JButton atcl3;
     private javax.swing.JButton cadcl;
     private javax.swing.JButton cadcl1;
     private javax.swing.JButton jButton4;

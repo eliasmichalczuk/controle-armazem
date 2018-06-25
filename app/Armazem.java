@@ -5,6 +5,7 @@
  */
 package app;
 
+import app.cliente.CadCliente;
 import DAO.Connect;
 
 /**
