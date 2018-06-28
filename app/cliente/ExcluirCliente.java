@@ -70,7 +70,7 @@ public class ExcluirCliente extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Clinica Tabajara");
+        jLabel1.setText("Armazem !N$4N0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,17 +139,12 @@ public class ExcluirCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Não há cliente com este codigo!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
         }
         else{
-            excluir.setText( "" );
+            JOptionPane.showMessageDialog(this, "Usuário excluído!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_excluirActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
-        int acao = JOptionPane.showConfirmDialog(this, "Você tem certeza que deseja voltar?\n"
-            + "Todos os dados digitados serão perdidos.", "Confirmação",
-            JOptionPane.YES_NO_OPTION );
-
-        if( acao == JOptionPane.NO_OPTION ) return;
-
+       
         Armazem.showTelaInicial();
         this.dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed

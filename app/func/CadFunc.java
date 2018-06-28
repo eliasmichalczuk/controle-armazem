@@ -20,8 +20,10 @@ public class CadFunc extends javax.swing.JFrame {
 boolean ehCadastro = true;
     /**
      * Creates new form CadFunc
+     * @param cadastrar
      */
     public CadFunc(boolean cadastrar) {
+        ehCadastro = cadastrar;
         initComponents();
         carregardep();
        if(cadastrar){

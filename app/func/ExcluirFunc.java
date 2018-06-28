@@ -138,17 +138,12 @@ public class ExcluirFunc extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Não há funcionario com este codigo(¿?)!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
         }
         else{
-            excluir.setText( "" );
+            JOptionPane.showMessageDialog(this, "Funcionário excluído!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_excluirActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
-        int acao = JOptionPane.showConfirmDialog(this, "Você tem certeza que deseja voltar?\n"
-            + "Todos os dados digitados serão perdidos.", "Confirmação",
-            JOptionPane.YES_NO_OPTION );
-
-        if( acao == JOptionPane.NO_OPTION ) return;
-
+       
         Armazem.showTelaInicial();
         this.dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
