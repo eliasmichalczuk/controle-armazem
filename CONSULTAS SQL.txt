@@ -1,23 +1,40 @@
-SELECT funcionario.nome , tranportaCarga.data_hora
+2) SELECT cliente.nomeFantasia,notaFiscal.quantidadeCarga,ordem.tipoOrdem,tipoCarga.descricao
+FROM cliente , notaFiscal, carga , tipoCarga , ordem
+WHERE cliente.codCliente = notaFiscal.codCliente
+AND carga.DANFE = notaFiscal.DANFE
+AND carga.codTipoCarga=tipoCarga.codTipoCarga
+AND ordem.codBarra = carga.codBarra
+order by notaFiscal.quantidadeCarga asc
+
+SELECT funcionario.nome as "Operador de empilhadeira" , tranportaCarga.data as "Data do transporte" ,tranportaCarga.hora as "Hora do tranporte"
 FROM funcionario , operadorEmpilhadeira , carga , tranportaCarga
 WHERE funcionario.CPFFuncionario = operadorEmpilhadeira.CPFFuncionario -- funcionario x operadorEmpilhadeira
 AND carga.codBarra = tranportaCarga.codBarra -- carga x transporta
 AND tranportaCarga.CPFFuncionario = funcionario.CPFFuncionario -- funcionario x transporta
+order by tranportaCarga.data asc
 
-SELECT cliente.nomeFantasia,notaFiscal.quantidadeCarga,ordem.tipoOrdem,tipoCarga.descricao
-FROM cliente , notaFiscal, carga , tipoCarga , ordem
-WHERE cliente.codCliente = notaFiscal.codCliente
-AND carga.DANFE = notaFiscal.DANFE
-AND carga.codCliente = cliente.codCliente
-AND carga.codTipoCarga=tipoCarga.codTipoCarga
-AND ordem.codBarra = carga.codBarra
-and ordem.codOrdem = cliente.codordem
+4) SELECT funcionario.nome , confereCarga.data,confereCarga.hora
+FROM funcionario , conferente , carga , confereCarga
+WHERE funcionario.CPFFuncionario = conferente.CPFFuncionario -- funcionario x conferente
+AND carga.codBarra = confereCarga.codBarra -- carga x transporta
+AND confereCarga.CPFFuncionario = funcionario.CPFFuncionario -- funcionario x transporta
+order by confereCarga.data asc 
 
-
-SELECT confereCarga.data_hora,tranportaCarga.data_hora,alocacao.posicaoCorredor,corredor.incioCorredor,corredor.finalCorredor,armazem.codArmazem
+3) SELECT tranportaCarga.data as "Data do transporte",tranportaCarga.hora as "Hora do tranporte",confereCarga.hora as "Hora da Conferencia",confereCarga.data as "Data da Conferencia",alocacao.posicaoCorredor as "Posição",corredor.incioCorredor,corredor.finalCorredor,armazem.codArmazem
 FROM confereCarga,tranportaCarga,alocacao,corredor,armazem
 WHERE confereCarga.codBarra = tranportaCarga.codBarra
 AND alocacao.codBarra = confereCarga.codBarra
 AND alocacao.codBarra = tranportaCarga.codBarra
 AND corredor.codCorredor = alocacao.codCorredor
 AND corredor.codArmazem = armazem.codArmazem
+order by tranportaCarga.data asc
+
+SELECT departamento.descricao as "Departamento" , sum(baseSalarial) as "Soma dos salarios" , count(funcionario.CPFFuncionario) as "Quantidade de funcionarios"
+FROM funcionario , departamento
+WHERE funcionario.codDepartamento = departamento.codDepartamento
+group by departamento.descricao
+order by sum(baseSalarial) desc
+
+
+
+
